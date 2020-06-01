@@ -3,6 +3,9 @@ package kr.co.tjoeun.apipractice_20200527.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessagingService;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -148,9 +151,9 @@ public class ServerUtil {
 //        GET - 파라미터들이 모두 주소에 같이 적힌다.
 //        요청할때 파라미터를 주소에 모두 적어줘야한다.
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "/user_check").newBuilder();
-        urlBuilder.addEncodedQueryParameter("type", checkType);
-        urlBuilder.addEncodedQueryParameter("value", input);
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "/main_info").newBuilder();
+        urlBuilder.addEncodedQueryParameter("device_token", FirebaseInstanceId.getInstance().toString());
+        urlBuilder.addEncodedQueryParameter("os", "Android");
 
         String completeUrl = urlBuilder.build().toString();
         Log.d("완성된URL", completeUrl);
