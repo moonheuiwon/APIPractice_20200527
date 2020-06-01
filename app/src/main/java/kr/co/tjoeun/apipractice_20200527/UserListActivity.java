@@ -5,6 +5,8 @@ import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +40,22 @@ public class UserListActivity extends BaseActivity {
 
     @Override
     public void setupEvents() {
+
+        binding.userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                User clickedUser = users.get(position);
+
+                ServerUtil.postRequestUserCheck(mContext, clickedUser.getId(), new ServerUtil.JsonResponseHandler() {
+                    @Override
+                    public void onResponse(JSONObject json) {
+                        Log.d("찔러보기 응답", json.toString());
+                    }
+                });
+
+            }
+        });
 
     }
 
